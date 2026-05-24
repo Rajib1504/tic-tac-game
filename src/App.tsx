@@ -83,6 +83,13 @@ function App() {
       : currentPlayer === 'X'
         ? 'Your turn (X)'
         : 'Computer is thinking...'
+  const statusClassName = winner
+    ? 'status-win'
+    : isDraw
+      ? 'status-draw'
+      : isComputerTurn
+        ? 'status-thinking'
+        : 'status-turn'
 
   useEffect(() => {
     if (!isComputerTurn) {
@@ -128,7 +135,7 @@ function App() {
         <h1>Tic Tac Toe</h1>
 
         <p
-          className={`status ${winner ? 'status-win' : ''} ${isDraw ? 'status-draw' : ''}`}
+          className={`status ${statusClassName}`}
           aria-live="polite"
         >
           {statusText}
@@ -140,7 +147,7 @@ function App() {
               key={index}
               type="button"
               role="gridcell"
-              className="square"
+              className={`square ${cell === 'X' ? 'square-x' : ''} ${cell === 'O' ? 'square-o' : ''}`}
               onClick={() => handleSquareClick(index)}
               disabled={Boolean(cell) || isGameOver || isComputerTurn}
               aria-label={`Cell ${index + 1}${cell ? `, ${cell}` : ''}`}
